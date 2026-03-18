@@ -2,9 +2,22 @@ import type { Metadata } from 'next';
 import { getInstructors } from '@/lib/cosmic';
 import InstructorCard from '@/components/InstructorCard';
 
+const SITE_URL = 'https://ninja-cooks.cosmic.site';
+
 export const metadata: Metadata = {
-  title: 'Instructors — Ninja Cooks Dojo',
-  description: 'Meet the culinary sensei of Ninja Cooks Dojo.',
+  title: 'Instructors',
+  description: 'Meet the culinary sensei of Ninja Cooks Dojo. Learn from world-class cooking instructors.',
+  openGraph: {
+    title: 'Instructors — Ninja Cooks Dojo',
+    description: 'Meet the culinary sensei of Ninja Cooks Dojo. Learn from world-class cooking instructors.',
+    url: `${SITE_URL}/instructors`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Instructors — Ninja Cooks Dojo',
+    description: 'Meet the culinary sensei of Ninja Cooks Dojo.',
+  },
 };
 
 export default async function InstructorsPage() {

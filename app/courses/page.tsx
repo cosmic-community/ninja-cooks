@@ -1,28 +1,27 @@
-import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { getCourses } from '@/lib/cosmic';
 import CourseFilterClient from '@/components/CourseFilterClient';
 
+const SITE_URL = 'https://ninja-cooks.cosmic.site';
+
 export const metadata: Metadata = {
-  title: 'Courses — Ninja Cooks Dojo',
+  title: 'Courses',
   description: 'Browse our collection of ninja cooking courses. From beginner ramen to advanced sushi mastery.',
+  openGraph: {
+    title: 'Courses — Ninja Cooks Dojo',
+    description: 'Browse our collection of ninja cooking courses. From beginner ramen to advanced sushi mastery.',
+    url: `${SITE_URL}/courses`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Courses — Ninja Cooks Dojo',
+    description: 'Browse our collection of ninja cooking courses.',
+  },
 };
 
-interface CoursesPageProps {
-  searchParams: Promise<{ difficulty?: string; sort?: string }>;
-}
-
-export default async function CoursesPage({ searchParams }: CoursesPageProps) {
+export default async function CoursesPage() {
   const courses = await getCourses();
-  const params = await searchParams;
-
-  const difficulty = (['beginner', 'intermediate', 'advanced'].includes(params.difficulty ?? '')
-    ? params.difficulty
-    : 'all') as 'all' | 'beginner' | 'intermediate' | 'advanced';
-
-  const sort = (['price-asc', 'price-desc'].includes(params.sort ?? '')
-    ? params.sort
-    : 'featured') as 'featured' | 'price-asc' | 'price-desc';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -39,18 +38,7 @@ export default async function CoursesPage({ searchParams }: CoursesPageProps) {
         </p>
       </div>
 
-      <Suspense fallback={
-        <div className="text-center py-20">
-          <span className="text-6xl mb-4 block">🍜</span>
-          <p className="text-ninja-400 text-lg">Loading courses...</p>
-        </div>
-      }>
-        <CourseFilterClient
-          courses={courses}
-          initialDifficulty={difficulty}
-          initialSort={sort}
-        />
-      </Suspense>
+      <CourseFilterClient courses={courses} />
     </div>
   );
 }
