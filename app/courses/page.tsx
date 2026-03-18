@@ -20,8 +20,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function CoursesPage() {
+interface PageProps {
+  searchParams: Promise<{ difficulty?: string; sort?: string }>;
+}
+
+export default async function CoursesPage({ searchParams }: PageProps) {
   const courses = await getCourses();
+  const params = await searchParams;
+
+  const initialDifficulty = (['beginner', 'intermediate', 'advanced'].includes(params.difficulty ?? '')
+    ? params.difficulty
+    : 'all') as 'all' | 'beginner' | 'intermediate' | 'advanced';
+
+  const initialSort = (['price-asc', 'price-desc'].includes(params.sort ?? '')
+    ? params.sort
+    : 'featured') as 'featured' | 'price-asc' | 'price-desc';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
@@ -38,7 +51,11 @@ export default async function CoursesPage() {
         </p>
       </div>
 
-      <CourseFilterClient courses={courses} />
+      <CourseFilterClient
+        courses={courses}
+        initialDifficulty={initialDifficulty}
+        initialSort={initialSort}
+      />
     </div>
   );
 }
