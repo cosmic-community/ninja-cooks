@@ -1,6 +1,6 @@
 # Ninja Cooks Dojo
 
-![App Preview](https://imgix.cosmicjs.com/e72ce570-2285-11f1-9917-8fa7b0e99ce3-autopilot-photo-1500648767791-00dcc994a43e-1773809392888.jpeg?w=1200&h=630&fit=crop&auto=format,compress)
+![App Preview](https://imgix.cosmicjs.com/e52e5650-2285-11f1-9917-8fa7b0e99ce3-autopilot-photo-1555939594-58d7cb561ad1-1773809389542.jpeg?w=1200&h=630&fit=crop&auto=format,compress)
 
 An online cooking course platform where food warriors unite to learn, cook, and conquer flavor. Built with Next.js 16 and Cosmic CMS, the Ninja Cooks Dojo features stunning dark ninja-themed design, dynamic course catalogs, instructor profiles, and student testimonials.
 
