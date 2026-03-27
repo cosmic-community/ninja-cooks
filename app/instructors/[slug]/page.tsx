@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { getInstructorBySlug, getInstructors, getCourses, getMetafieldValue } from '@/lib/cosmic';
 import CourseCard from '@/components/CourseCard';
 import JsonLd from '@/components/JsonLd';
+import MarkdownContent from '@/components/MarkdownContent';
 
 const SITE_URL = 'https://ninja-cooks.cosmic.site';
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const name = getMetafieldValue(instructor.metadata?.name) || instructor.title;
   const bio = getMetafieldValue(instructor.metadata?.bio);
   const photo = instructor.metadata?.photo;
-  const description = bio ? bio.slice(0, 160) : `Meet ${name} at Ninja Cooks Dojo.`;
+  const description = bio ? bio.replace(/#{1,6}\s/g, '').replace(/\*\*/g, '').slice(0, 160) : `Meet ${name} at Ninja Cooks Dojo.`;
   const ogImage = photo
     ? `${photo.imgix_url}?w=1200&h=630&fit=crop&auto=format,compress`
     : `${SITE_URL}/og-default.png`;
@@ -78,7 +79,7 @@ export default async function InstructorDetailPage({ params }: PageProps) {
     name,
     url: `${SITE_URL}/instructors/${slug}`,
     ...(specialty && { jobTitle: specialty }),
-    ...(bio && { description: bio.slice(0, 500) }),
+    ...(bio && { description: bio.replace(/#{1,6}\s/g, '').replace(/\*\*/g, '').slice(0, 500) }),
     ...(photo && { image: `${photo.imgix_url}?w=400&h=400&fit=crop&auto=format,compress` }),
     worksFor: {
       '@type': 'Organization',
@@ -142,7 +143,7 @@ export default async function InstructorDetailPage({ params }: PageProps) {
               )}
             </div>
 
-            <div className="text-center sm:text-left">
+            <div className="text-center sm:text-left flex-1">
               <h1 className="text-3xl sm:text-4xl font-black text-white mb-2">
                 {name}
               </h1>
@@ -152,9 +153,7 @@ export default async function InstructorDetailPage({ params }: PageProps) {
                 </p>
               )}
               {bio && (
-                <p className="text-ninja-200 leading-relaxed max-w-2xl whitespace-pre-line">
-                  {bio}
-                </p>
+                <MarkdownContent content={bio} />
               )}
             </div>
           </div>
