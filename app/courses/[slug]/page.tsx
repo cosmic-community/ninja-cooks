@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { getCourseBySlug, getCourses, getMetafieldValue } from '@/lib/cosmic';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import JsonLd from '@/components/JsonLd';
+import MarkdownContent from '@/components/MarkdownContent';
 
 const SITE_URL = 'https://ninja-cooks.cosmic.site';
 
@@ -177,12 +178,8 @@ export default async function CourseDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {description && (
-              <div className="prose prose-invert max-w-none">
-                <p className="text-ninja-200 text-lg leading-relaxed whitespace-pre-line">
-                  {description}
-                </p>
-              </div>
+            {description && typeof description === 'string' && (
+              <MarkdownContent content={description} />
             )}
           </div>
 
